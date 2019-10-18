@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>3 screen app</title>
+	<title>Progressive Web Application</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	 crossorigin="anonymous">
 
@@ -14,6 +14,13 @@
 			display: none;
 			margin: 1em;
 		}
+        .inputText{
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+        }
+        
+        
 	</style>
 
 </head>
@@ -45,7 +52,20 @@
 
   <!-- the content divs -->
   <div class="content" id="home">
-    Home page
+    What movie would you like to see?
+    <input class="inputText" type="text" id="movieName" name="Movie" placeholder="Insert Movie name here">
+      
+    <p>Where would you like to see the movie?</p>
+    <input class="inputText" type="text" id="parkName" name="Location" placeholder="Insert Park name here">
+    
+    <p>What day(s) can you see the movie?</p>
+    <input type="checkbox" name="Monday" value="Yes">Monday<br>
+    <input type="checkbox" name="Tuesday" value="Yes">Tuesday<br>
+    <input type="checkbox" name="Wednesday" value="Yes">Wednesday<br>
+    <input type="checkbox" name="Thursday" value="Yes">Thursday<br>
+    <input type="checkbox" name="Friday" value="Yes">Friday<br>
+    <input type="checkbox" name="Saturday" value="Yes">Saturday<br>
+    <input type="checkbox" name="Sunday" value="Yes">Sunday<br>
   </div>
   <div class="content" id="screen2">
     This is screen 2
