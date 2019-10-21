@@ -36,7 +36,7 @@
                     <a class="nav-link" href="#Input">Input</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#List">List</a>
+                    <a class="nav-link" href="#List" id="List">List</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#Map">Map</a>
@@ -50,21 +50,23 @@
 
   <!-- the content divs -->
   <div class="content" id="Input">
-      <form name="parameters">
+      <form name="parameters" action="https://data.cityofchicago.org/resource/7piw-z6r6.json" method="get">
         What movie would you like to see?
-        <input class="inputText" type="text" id="movieName" name="Movie" placeholder="Insert Movie name here">
+        <input class="inputText" type="text" id="movieName" name="title" placeholder="Insert Movie name here">
 
         <p>Where would you like to see the movie?</p>
-        <input class="inputText" type="text" id="parkName" name="Location" placeholder="Insert Park name here">
+        <input class="inputText" type="text" id="parkName" name="park" placeholder="Insert Park name here">
 
         <p>What day(s) can you see the movie?</p>
-        <input type="checkbox" name="day">Monday<br>
-        <input type="checkbox" name="day">Tuesday<br>
-        <input type="checkbox" name="day">Wednesday<br>
-        <input type="checkbox" name="day">Thursday<br>
-        <input type="checkbox" name="day">Friday<br>
-        <input type="checkbox" name="day">Saturday<br>
-        <input type="checkbox" name="day">Sunday<br>
+        <input type="checkbox" name="day" value="Mon">Monday<br>
+        <input type="checkbox" name="day" value="Mon">Tuesday<br>
+        <input type="checkbox" name="day" value="Mon">Wednesday<br>
+        <input type="checkbox" name="day" value="Mon">Thursday<br>
+        <input type="checkbox" name="day" value="Mon">Friday<br>
+        <input type="checkbox" name="day" value="Mon">Saturday<br>
+        <input type="checkbox" name="day" value="Mon">Sunday<br>
+          
+        <input type="submit" value="Submit">
       </form>
   </div>
   <div class="content" id="List">
@@ -101,13 +103,7 @@
 
     });
     
-    $("#List").on("click", function(){
-          let form = document.forms.parameters;
-          let movie = form.elements.movieName;
-          let location = form.elements.parkName;
-          let daysAvailable = form.elements.day;
-          alert("Hello");
-    });
+
   </script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3xQo7bTCv1fHkCS7XBJo2RVegde-88pE&callback=initMap"
   type="text/javascript"></script>
