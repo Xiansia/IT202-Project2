@@ -64,9 +64,10 @@
         <input type="checkbox" name="day" value="Thu" class="daysAvailable">Thursday<br>
         <input type="checkbox" name="day" value="Fri" class="daysAvailable">Friday<br>
         <input type="checkbox" name="day" value="Sat" class="daysAvailable">Saturday<br>
-        <input type="checkbox" name="day" value="Sun" class="daysAvailable">Sunday<br>
+        <input type="checkbox" name="day" value="Sun" class="daysAvailable">Sunday<br><br>
           
-  
+        <input type="checkbox" id="passedTime" checked>Search for upcoming movies?</input><br>
+      
         <input type="button" value="Submit" id="search">
       <!--</form>-->
   </div>
@@ -105,10 +106,21 @@
         var movieSearch = document.getElementById("movieName").value;
         var placeSearch = document.getElementById("parkName").value;
         var array = document.getElementsByClassName("daysAvailable");
+        var today = new Date();
+        var currentDate = today.getFullYear() + "-";
+        console.log(currentDate);
+        currentDate = currentDate + (today.getMonth()+1) + "-";
+        console.log(currentDate);
+        currentDate = currentDate + today.getDate();
+        console.log(currentDate);
         //console.log(link);
         //console.log(movieSearch);        
         //console.log(placeSearch);
-        if(movieSearch != "" || placeSearch != ""|| array.length > 0){
+        var flag = false;
+        if($("#passedTime").is(":checked")){
+            flag = true;
+        }
+        if(movieSearch != "" || placeSearch != ""|| array.length > 0||flag){
             link = link + "?";
         }
         if(movieSearch != ""){
@@ -118,7 +130,7 @@
              link = link + "park=" + placeSearch + "&";
         }
 
-        if(array.length > 0){
+        if(array.length > 0 || flag){
             link = link + "$where=day in("
         }
         var counter = 0;
@@ -129,10 +141,18 @@
         }
         if(link.slice(-1) == ','){
             link = link.slice(0, -1);
+            link = link + ")";
+            
+            if(flag){
+                link = link + " AND ";
+            }
         }
-        link = link + ")" + "&";
         
-        link = link.slice(0, -1);
+        if(flag){
+            link = link + "date >" + "'" + currentDate + "'";
+        }
+        
+        
         console.log(link);
         $.get(link);
     });
@@ -154,8 +174,8 @@
     
   </script>
     
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3xQo7bTCv1fHkCS7XBJo2RVegde-88pE&callback=initMap"
-  type="text/javascript"></script>
+<!--   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3xQo7bTCv1fHkCS7XBJo2RVegde-88pE&callback=initMap"
+  type="text/javascript"></script> -->
 
   </body>
 </html>
