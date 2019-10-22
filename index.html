@@ -106,6 +106,7 @@
         var movieSearch = document.getElementById("movieName").value;
         var placeSearch = document.getElementById("parkName").value;
         var array = document.getElementsByClassName("daysAvailable");
+        var passedTime = document.getElementById("passedTime").checked;
         var today = new Date();
         var currentDate = today.getFullYear() + "-";
         console.log(currentDate);
@@ -116,11 +117,14 @@
         //console.log(link);
         //console.log(movieSearch);        
         //console.log(placeSearch);
+        
         var flag = false;
-        if($("#passedTime").is(":checked")){
+        for(var item of array){
+          if ($(item).is(":checked")){
             flag = true;
+          }
         }
-        if(movieSearch != "" || placeSearch != ""|| array.length > 0||flag){
+        if(movieSearch != "" || placeSearch != ""|| flag ||passedTime){
             link = link + "?";
         }
         if(movieSearch != ""){
@@ -130,11 +134,15 @@
              link = link + "park=" + placeSearch + "&";
         }
 
-        if(array.length > 0 || flag){
-            link = link + "$where=day in("
+        if(flag||passedTime){
+            link = link + "$where=";
         }
         var counter = 0;
         for(var item of array){
+          if(flag){
+              link = link + "day in (";
+              flag = false;
+          }
           if ($(item).is(":checked")){
             link = link + "'" + item.value + "'" + ",";
           }
@@ -143,12 +151,12 @@
             link = link.slice(0, -1);
             link = link + ")";
             
-            if(flag){
+            if(passedTime){
                 link = link + " AND ";
             }
         }
         
-        if(flag){
+        if(passedTime){
             link = link + "date >" + "'" + currentDate + "'";
         }
         
