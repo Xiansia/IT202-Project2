@@ -108,19 +108,33 @@
         //console.log(link);
         //console.log(movieSearch);        
         //console.log(placeSearch);
-        if(movieSearch != ""){
-             link = link + "?title=" + movieSearch;
+        if(movieSearch != "" || placeSearch != ""|| array.length > 0){
+            link = link + "?";
         }
         if(movieSearch != ""){
-             link = link + "&park=" + placeSearch;
+             link = link + "title=" + movieSearch + "&";
         }
-        console.log(link);
+        if(placeSearch != ""){
+             link = link + "park=" + placeSearch + "&";
+        }
+
+        if(array.length > 0){
+            link = link + "$where=day in("
+        }
         var counter = 0;
         for(var item of array){
           if ($(item).is(":checked")){
-            console.log(item.value);
-          }    
+            link = link + "'" + item.value + "'" + ",";
+          }
         }
+        if(link.slice(-1) == ','){
+            link = link.slice(0, -1);
+        }
+        link = link + ")" + "&";
+        
+        link = link.slice(0, -1);
+        console.log(link);
+        $.get(link);
     });
 //     $(".daysAvailable").on("click", function(){
        
