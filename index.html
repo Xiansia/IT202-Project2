@@ -87,6 +87,7 @@
       
   
   <script>
+    var result = 0;
     $(document).ready(function() {
 
       function hideScreens() {
@@ -102,31 +103,36 @@
     });
       
     $("#search").on("click",function(){
+        //Getting the original link
         var link = "https://data.cityofchicago.org/resource/7piw-z6r6.json";
+        
+        //Getting respective elements
         var movieSearch = document.getElementById("movieName").value;
         var placeSearch = document.getElementById("parkName").value;
         var array = document.getElementsByClassName("daysAvailable");
         var passedTime = document.getElementById("passedTime").checked;
+        
+        //Getting Date Object and setting up current time
         var today = new Date();
         var currentDate = today.getFullYear() + "-";
-        console.log(currentDate);
         currentDate = currentDate + (today.getMonth()+1) + "-";
-        console.log(currentDate);
         currentDate = currentDate + today.getDate();
-        console.log(currentDate);
-        //console.log(link);
-        //console.log(movieSearch);        
-        //console.log(placeSearch);
         
+        //Setting Flag for future use.
         var flag = false;
         for(var item of array){
           if ($(item).is(":checked")){
             flag = true;
+            break;
           }
         }
+        
+        //Check if any input was placed in.
         if(movieSearch != "" || placeSearch != ""|| flag ||passedTime){
             link = link + "?";
         }
+        
+        //Grabbing Movie Name and Place Name (if applicable)
         if(movieSearch != ""){
              link = link + "title=" + movieSearch + "&";
         }
@@ -134,10 +140,12 @@
              link = link + "park=" + placeSearch + "&";
         }
 
+        //Check if any checkboxes were checked. MUST use where clause
         if(flag||passedTime){
             link = link + "$where=";
         }
-        var counter = 0;
+        
+        //Go through the days and see which days are available
         for(var item of array){
           if(flag){
               link = link + "day in (";
@@ -147,38 +155,33 @@
             link = link + "'" + item.value + "'" + ",";
           }
         }
+        
+        //Remove last comma and close day section.
         if(link.slice(-1) == ','){
             link = link.slice(0, -1);
             link = link + ")";
             
+            //Check if they want to watch movies in the future.
             if(passedTime){
                 link = link + " AND ";
             }
         }
         
+        //Filter future movies.
         if(passedTime){
             link = link + "date >" + "'" + currentDate + "'";
         }
         
+        //Get the results
+        $.get(link, function(response){
+           console.log("We have reached here.");
+           result = response;
+           console.log(result);
+        });
         
-        console.log(link);
-        $.get(link);
     });
-//     $(".daysAvailable").on("click", function(){
-       
-//     });
-//     $('#test').on("click", function() {
-//             var names = [];
-//             $('#daysAvailable input:checked').each(function() {
-//                 names.push(this.name);
-//             });
-//             // now names contains all of the names of checked checkboxes
-//             // do something with it
-//             var index;
-//             for (index = 0; index < names.length; ++index) {
-//                 console.log(names[index]);
-//             }
-//         });    
+
+
     
   </script>
     
