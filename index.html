@@ -71,7 +71,7 @@
         <input type="button" value="Submit" id="search">
       <!--</form>-->
   </div>
-  <div class="content" id="List">
+  <div class="content" id="List1">
     This is screen 2
   </div>
   <div class="content" id="Map">
@@ -88,6 +88,7 @@
   
   <script>
     var result = 0;
+    var html = "";
     $(document).ready(function() {
 
       function hideScreens() {
@@ -98,7 +99,14 @@
         hideScreens();
         var target = $(this).attr("href");
         $(target).show();
-        $(target).load("page_content/_" + target.replace("#","") + ".html");
+        console.log(target);
+        if(target == "#List"){
+            document.getElementById("List1").innerHTML+= html;
+            $(target).load(html);
+        }
+        else{
+            $(target).load("page_content/_" + target.replace("#","") + ".html");
+        }
       });
     });
       
@@ -181,7 +189,26 @@
         
     });
 
+    $("#List").on("click",function(){
+        html = "<table border='1|1'>";
+        html+="<tr>";
+        html+="<td>Result Number</td>";
+        html+="<td>Movie Name</td>";
+        html+="<td>Location</td>";
+        html+="<td>Day Available</td>";
+        for (var i = 0; i < result.length; i++) {
+            html+="<tr>";
+            html+="<td>"+(i+1)+"</td>";
+            html+="<td>"+result[i].title+"</td>";
+            html+="<td>"+result[i].park+"</td>";
+            html+="<td>"+result[i].day+"</td>";
 
+            html+="</tr>";
+
+        }
+        html+="</table>";
+        
+    });
     
   </script>
     
