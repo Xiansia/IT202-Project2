@@ -33,10 +33,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#Input">Input</a>
+                    <a class="nav-link" href="#Input" id="InputNav">Input</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#List" id="List">List</a>
+                    <a class="nav-link" href="#List" id="ListNav">List</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#Map">Map</a>
@@ -71,7 +71,7 @@
         <input type="button" value="Submit" id="search">
       <!--</form>-->
   </div>
-  <div class="content" id="List1">
+  <div class="content" id="List">
     This is screen 2
   </div>
   <div class="content" id="Map">
@@ -88,27 +88,22 @@
   
   <script>
     var result = 0;
-    var html = "";
+    //var html = "";
     $(document).ready(function() {
 
       function hideScreens() {
         $(".content").hide();
+          
       }
 
       $(".nav-link").on("click", function(){
         hideScreens();
         var target = $(this).attr("href");
         $(target).show();
-        console.log(target);
-        if(target == "#List"){
-            document.getElementById("List1").innerHTML+= html;
-            $(target).load(html);
-        }
-        else{
-            $(target).load("page_content/_" + target.replace("#","") + ".html");
-        }
+        $(target).load("page_content/_" + target.replace("#","") + ".html");
       });
-    });
+        
+     });
       
     $("#search").on("click",function(){
         //Getting the original link
@@ -189,31 +184,33 @@
         
     });
 
-    $("#List").on("click",function(){
-        html = "<table border='1|1'>";
+   $("#ListNav").on("click",function(){
+        var html = "<table border='1|1'>";
         html+="<tr>";
         html+="<td>Result Number</td>";
         html+="<td>Movie Name</td>";
         html+="<td>Location</td>";
+        html+="<td>Address</td>";
         html+="<td>Day Available</td>";
         for (var i = 0; i < result.length; i++) {
             html+="<tr>";
             html+="<td>"+(i+1)+"</td>";
             html+="<td>"+result[i].title+"</td>";
             html+="<td>"+result[i].park+"</td>";
+            html+="<td>"+result[i].park_address+"</td>";
             html+="<td>"+result[i].day+"</td>";
 
             html+="</tr>";
 
         }
         html+="</table>";
-        
-    });
+        $("#List").html(html);
+   });
     
   </script>
     
-<!--   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3xQo7bTCv1fHkCS7XBJo2RVegde-88pE&callback=initMap"
-  type="text/javascript"></script> -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3xQo7bTCv1fHkCS7XBJo2RVegde-88pE&callback=initMap"
+  type="text/javascript"></script>
 
   </body>
 </html>
