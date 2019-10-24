@@ -88,7 +88,9 @@
   </div>
   
   <div class="content" id="About">
-    About 
+    App Name: Movie Search Application<br>
+    Developer: Conway Dang<br>
+    GitHub Repo Link: https://github.com/Xiansia/IT202-Project2
   </div>
 
   <script>
@@ -102,11 +104,49 @@
         var flatitude = parseFloat(result[0].location.latitude);
         map = new google.maps.Map(document.getElementById('Map'), {
           center: {lat: flatitude, lng: flongitude},
-          zoom: 8
+          zoom: 16
         });
-        
+        for(var entry of result){
+            if(entry.location != undefined){
+                var longitude = parseFloat(entry.location.longitude);
+                var latitude = parseFloat(entry.location.latitude);
+                var location = {lat: latitude, lng: longitude};
+            
+            
+                var contentString = '<div id="content">'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<h1 id="firstHeading" class="firstHeading">'+ entry.title  +'</h1>'+
+                '<div id="bodyContent">'+
+                '<p>Location: ' + entry.park + '<br>' +
+                'Address: ' + entry.park_address + '<br>'+
+                'Phone Number: ' + entry.park_phone + '<br><br>'+
+                'Date Showing: ' + entry.date + '<br>'+
+                'Day: ' + entry.day +'<br>'+
+                'Rating: ' + entry.rating +'<br>'+
+                'Closed Captions: ' + entry.cc +'<br></p>'+
+                '</div>'+
+                '</div>';
+
+                var infowindow = new google.maps.InfoWindow({
+                  content: contentString
+                });  
+
+                var marker = new google.maps.Marker({
+                  position: location,
+                  map: map,
+                  title: entry.park
+                });
+                marker.addListener('click', function() {
+                  infowindow.open(map, marker);
+                });
+            }
+        }
           
 
+
+
+          
         console.log(map);
       }
   </script>
@@ -236,6 +276,7 @@
                 html+="<td>"+result[i].park+"</td>";
                 html+="<td>"+result[i].park_address+"</td>";
                 html+="<td>"+result[i].day+"</td>";
+                
 
                 html+="</tr>";
 
