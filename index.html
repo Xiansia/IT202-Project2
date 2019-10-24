@@ -3,7 +3,8 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="initial-scale=1.0">
+    
 	<title>Progressive Web Application</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	 crossorigin="anonymous">
@@ -18,6 +19,14 @@
             width: 100%;
             padding: 12px 20px;
             margin: 8px 0;
+        }
+        #Map {
+            height: 100%;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
         
         
@@ -39,7 +48,7 @@
                     <a class="nav-link" href="#List" id="ListNav">List</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#Map">Map</a>
+                    <a class="nav-link" href="#Map" id="MapNav">Map</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#About">About</a>
@@ -50,7 +59,6 @@
 
   <!-- the content divs -->
   <div class="content" id="Input">
-      <!--<form name="parameters" action="https://data.cityofchicago.org/resource/7piw-z6r6.json" method="get">-->
         What movie would you like to see?
         <input class="inputText" type="text" id="movieName" name="title" placeholder="Insert Movie name here">
 
@@ -69,19 +77,36 @@
         <input type="checkbox" id="passedTime" checked>Search for upcoming movies?</input><br>
       
         <input type="button" value="Submit" id="search">
-      <!--</form>-->
+        
+        <div id=Notification></div>
   </div>
   <div class="content" id="List">
     This is screen 2
   </div>
   <div class="content" id="Map">
-    This is screen 3
+    <p>The map is suppose to be here</p>
+     
   </div>
+  
   <div class="content" id="About">
     About 
   </div>
 
-
+  <script>
+      var map;
+      function initMap() {
+        console.log("initMap is being called");
+        
+        map = new google.maps.Map(document.getElementById('Map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+        console.log(map);
+      }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3xQo7bTCv1fHkCS7XBJo2RVegde-88pE&callback=initMap"
+  async defer></script>
+    
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
       
@@ -175,6 +200,7 @@
             link = link + "date >" + "'" + currentDate + "'";
         }
         
+
         //Get the results
         $.get(link, function(response){
            console.log("We have reached here.");
@@ -206,11 +232,13 @@
         html+="</table>";
         $("#List").html(html);
    });
-    
+
+   $("#MapNav").on("click", function(){
+      console.log("Map script called");
+      initMap();
+   });
+   
   </script>
-    
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3xQo7bTCv1fHkCS7XBJo2RVegde-88pE&callback=initMap"
-  type="text/javascript"></script>
 
   </body>
 </html>
