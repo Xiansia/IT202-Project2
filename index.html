@@ -99,13 +99,14 @@
         if(result == null){
             return false;
         }
-        console.log("initMap is being called");
+        //console.log("initMap is being called");
         var flongitude = parseFloat(result[0].location.longitude);
         var flatitude = parseFloat(result[0].location.latitude);
         map = new google.maps.Map(document.getElementById('Map'), {
           center: {lat: flatitude, lng: flongitude},
           zoom: 16
         });
+
         for(var entry of result){
             if(entry.location != undefined){
                 var longitude = parseFloat(entry.location.longitude);
@@ -129,25 +130,23 @@
                 '</div>';
 
                 var infowindow = new google.maps.InfoWindow({
-                  content: contentString
+                    
                 });  
 
                 var marker = new google.maps.Marker({
                   position: location,
                   map: map,
-                  title: entry.park
+                  title: entry.park,
+                  content: contentString
                 });
                 marker.addListener('click', function() {
-                  infowindow.open(map, marker);
+                  infowindow.open(map, this);
+                  infowindow.setContent(infowindow.anchor.content)
                 });
+                
+
             }
         }
-          
-
-
-
-          
-        console.log(map);
       }
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3xQo7bTCv1fHkCS7XBJo2RVegde-88pE&callback=initMap"
@@ -249,9 +248,9 @@
 
         //Get the results
         $.get(link, function(response){
-           console.log("We have reached here.");
+           //console.log("We have reached here.");
            result = response;
-           console.log(result);
+           //console.log(result);
         });
         
     });
