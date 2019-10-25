@@ -292,12 +292,14 @@
 
    $("#MapNav").on("click", function(){
       if(result == null){
+          alert("Results is null!");
           return false;
       }
       if(result.length != 0){
           initMap(result);
       }
       else{
+          alert("Map will not display if there are no results!");
           return false;
       }
    });
